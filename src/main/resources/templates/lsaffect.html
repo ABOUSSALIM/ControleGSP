@@ -108,7 +108,7 @@
         </a>
         <div th:each="i : ${#numbers.sequence(projetsPage.number - 1, projetsPage.number + 1)}"
              th:if="${i >= 0 && i < projetsPage.totalPages}">
-            <a th:href="@{/collect(page=${i}, size=${projetsPage.size})}"
+            <a th:href="@{/membres(page=${i}, size=${projetsPage.size})}"
                th:classappend="${projetsPage.number == i} ? 'active'"
                th:text="${i + 1}"></a>
         </div>
