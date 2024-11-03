@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    <style>
+        .project-details {
+            text-align: left;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .project-details ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .project-details li {
+            margin-bottom: 10px;
+        }
+
+        .table th, .table td {
+            width: 30%;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+        }
+        .table td:last-child {
+            width: 20%;
+            text-align: center;
+        }
+
+        .project-info {
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+
+<body>
+<section class="banner-area organic-breadcrumb" style="height: 75px;"></section>
+<div class="container">
+    <div class="comment-form col-lg-12 container">
+        <div class="project-details">
+            <ul>
+                <li class="project-info"><h5>Nom du Projet : <span th:text="${projet.nom}"></span> </h5></li>
+                <li class="project-info"><h5>Date de Début : <span th:text="${projet.dateDebut}"></span></h5></li>
+                <li class="project-info"><h5>Date de Fin : <span th:text="${projet.dateFin}"></span></h5></li>
+                <li class="project-info"><h5>Description : <span th:text="${projet.description}"></span></h5></li>
+            </ul>
+        </div>
+        <h3 style="text-align: center;" th:if="${#lists.isEmpty(membres)}">Il n'y a pas de membre !</h3>
+        <table th:if="${!#lists.isEmpty(membres)}" class="table table-striped">
+            <thead>
+            <th colspan="2" style="text-align: center;">Membres du Projet</th>
+            <tr>
+                <th>Nom</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${membres}">
+                <td th:text="${m.nom}"></td>
+                <td th:text="${m.role}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

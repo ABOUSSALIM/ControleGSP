@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <title>Ensaj</title>
+
+    <style>
+        .table td, .table th {
+       border: 1px solid #dee2e6;
+       padding: 8px;
+   }
+     .pagination .page-item {
+      margin: 0 5px;
+  }
+  .pagination .btn-pagination {
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 123, 255, 0.1);
+  }
+  .pagination .btn-pagination:hover {
+      background-color: #0056b3;
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+      transform: translateY(-2px);
+  }
+  .pagination .active .btn-pagination {
+      background-color: #0056b3;
+      color: white;
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+  }
+  .pagination .disabled .btn-pagination {
+      background-color: #e0e0e0;
+      color: #6c757d;
+      cursor: not-allowed;
+      box-shadow: none;
+  }
+
+  .pagination .btn-pagination i {
+      margin-right: 5px;
+  }
+
+  .pagination .btn-pagination:focus {
+      outline: none;
+  }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/linearicons.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.css}">
+    <link rel="stylesheet" th:href="@{/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/nouislider.min.css}">
+    <link rel="stylesheet" th:href="@{/css/ion.rangeSlider.css}">
+    <link rel="stylesheet" th:href="@{/css/ion.rangeSlider.skinFlat.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<header class="header_area sticky-header">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light main_box">
+            <div class="container">
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        <li class="nav-item "><a class="nav-link" href="/collect">Projets</a></li>
+                        <li class="nav-item submenu dropdown active ">
+                            <a href="/membres" class="nav-link ">Gestion des membres</a>
+                        </li>
+                        <li class="nav-item submenu dropdown ">
+                            <a href="/add" class="nav-link">Créer un projet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<section class="banner-area organic-breadcrumb" style="height: 75px;"></section>
+<h3  style="text-align: center;"  th:if="${projetsPage.totalElements == 0}">Il n'y a pas de projet!</h3>
+<div th:if="${projetsPage.totalElements > 0}" class="comment-form col-lg-12 container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom du Projet</th>
+            <th>Date de Début</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p :${projetsPage.content}">
+            <td th:text="${p.nom}"></td>
+            <td th:text="${p.dateDebut}"></td>
+            <td>
+                <a th:href="@{/newmembre/{id}(id=${p.id})}" class="genric-btn info small">assigner membre</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <a th:href="${projetsPage.hasPrevious()} ? @{/membres(page=${projetsPage.number - 1}, size=${projetsPage.size})} : '#'"
+           th:classappend="${!projetsPage.hasPrevious()} ? 'disabled'" class="prev-arrow">
+            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+        </a>
+        <div th:each="i : ${#numbers.sequence(projetsPage.number - 1, projetsPage.number + 1)}"
+             th:if="${i >= 0 && i < projetsPage.totalPages}">
+            <a th:href="@{/collect(page=${i}, size=${projetsPage.size})}"
+               th:classappend="${projetsPage.number == i} ? 'active'"
+               th:text="${i + 1}"></a>
+        </div>
+        <a th:href="${projetsPage.hasNext()} ? @{/membres(page=${projetsPage.number + 1}, size=${projetsPage.size})} : '#'"
+           th:classappend="${!projetsPage.hasNext()} ? 'disabled'" class="next-arrow">
+            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
+<script th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
+<script th:src="@{/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/js/jquery.sticky.js}"></script>
+<script th:src="@{/js/nouislider.min.js}"></script>
+<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+<script th:src="@{/js/owl.carousel.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
